@@ -1,0 +1,38 @@
+name: Weather Poem Pipeline
+
+on:
+  schedule:
+    - cron: '0 19 * * *' # 20:00 Europe/Copenhagen = 19:00 UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Fetch weather & store in DB
+        run: python fetch.py
+
+      - name: Generate and publish poem
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python generate_poem.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git add docs/index.html weather.db
+          git commit -m "Update weather and poem [skip ci]" || echo "No changes to commit"
+          git push
