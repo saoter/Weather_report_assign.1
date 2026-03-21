@@ -38,8 +38,8 @@ def make_poem_prompt(weather_data):
 {info}
 
 The poem should be written in TWO languages:
-1. First in {English}
-2. Then in {Nepali}
+1. First in {POEM_LANGUAGE_1}
+2. Then in {POEM_LANGUAGE_2}
 
 In the poem:
 - Compare the weather conditions
