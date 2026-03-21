@@ -6,8 +6,12 @@ Creates HTML output for GitHub Pages
 import sqlite3
 import os
 from datetime import datetime
+from dotenv import load_dotenv  
 from groq import Groq
 from config import DB_PATH, GROQ_MODEL, POEM_LANGUAGE_1, POEM_LANGUAGE_2, POEM_MAX_TOKENS, POEM_TEMPERATURE, HTML_FILE
+
+# Load environment variables from .env file
+load_dotenv()  # ← Add this
 
 def get_weather_from_db():
     """Fetch latest weather data from database"""
@@ -55,9 +59,17 @@ Format it clearly with language headers."""
 def generate_groq_poem(prompt):
     """Generate poem using Groq API"""
     try:
-        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        api_key = os.getenv("GROQ_API_KEY")
+        
+        if not api_key:
+            print("❌ GROQ_API_KEY not found!")
+            print("   Make sure you have .env file with: GROQ_API_KEY=gsk_...")
+            raise ValueError("GROQ_API_KEY environment variable is not set")
+        
+        client = Groq(api_key=api_key)
         
         print("🤖 Generating poem with Groq LLM...")
+        print(f"   Using model: {GROQ_MODEL}")
         
         response = client.chat.completions.create(
             model=GROQ_MODEL,

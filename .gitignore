@@ -1,0 +1,5 @@
+.env
+__pycache__/
+*.pyc
+data/weather.db
+.DS_Store

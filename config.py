@@ -23,7 +23,6 @@ LOCATIONS = [
 ]
 
 # ✅ VALID weather variables for Open-Meteo DAILY forecast
-# Removed: cloudcover (not available for daily)
 WEATHER_VARIABLES = [
     "temperature_2m_max",
     "temperature_2m_min",
@@ -40,8 +39,8 @@ DB_TABLE = "weather_data"
 OPEN_METEO_API = "https://api.open-meteo.com/v1/forecast"
 TIMEZONE = "auto"
 
-# Groq LLM Settings
-GROQ_MODEL = "mixtral-8x7b-32768"
+# ✅ Groq LLM Settings - UPDATED MODEL
+GROQ_MODEL = "llama-3.1-8b-instant"  
 POEM_LANGUAGE_1 = "English"
 POEM_LANGUAGE_2 = "Nepali"
 POEM_MAX_TOKENS = 512
