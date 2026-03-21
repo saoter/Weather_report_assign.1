@@ -39,7 +39,7 @@ DB_PATH = "data/weather.db"
 DB_TABLE = "weather_data"
 
 # API Settings
-OPEN_METEO_API = "https://open-meteo.com/en/docs?forecast_days=16&hourly=temperature_2m,precipitation,cloud_cover,wind_speed_180m,relative_humidity_2m&latitude=26.6068,27.7017,57.048&longitude=87.1478,85.3206,9.9187"
+OPEN_METEO_API = "https://api.open-meteo.com/v1/forecast"
 TIMEZONE = "Europe/Copenhagen"
 
 # Groq LLM Settings
