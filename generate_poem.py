@@ -15,7 +15,7 @@ def get_weather_from_db():
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT location, date, temperature_2m_max, precipitation_sum, windspeed_10m_max, relative_humidity_2m_max, cloudcover
+            SELECT location, date, temperature_2m_max, temperature_2m_min, precipitation_sum, windspeed_10m_max, relative_humidity_2m_max
             FROM weather_data
             ORDER BY created_at DESC
             LIMIT 3
@@ -30,8 +30,8 @@ def get_weather_from_db():
 def make_poem_prompt(weather_data):
     """Create the prompt for the LLM"""
     info = ""
-    for loc, date, temp, prec, wind, humidity, cloud in weather_data:
-        info += f"{loc} ({date}): {temp}°C, {prec}mm rain, {wind}km/h wind, {humidity}% humidity, {cloud}% clouds\n"
+    for loc, date, temp_max, temp_min, prec, wind, humidity in weather_data:
+        info += f"{loc} ({date}): Max {temp_max}°C, Min {temp_min}°C, {prec}mm rain, {wind}km/h wind, {humidity}% humidity\n"
     
     prompt = f"""Write a beautiful, creative poem comparing the weather in these 3 cities tomorrow.
 
@@ -43,7 +43,8 @@ The poem should be written in TWO languages:
 
 In the poem:
 - Compare the weather conditions
-- Highlight the differences between locations
+- Highlight the temperature differences
+- Mention precipitation and wind
 - Suggest which location would be nicest to visit tomorrow
 - Make it poetic and creative, not just factual
 
@@ -79,24 +80,22 @@ def generate_groq_poem(prompt):
 def write_html(poem, weather_data):
     """Generate HTML output and save to docs/index.html"""
     
-    # Create docs folder if it doesn't exist
     os.makedirs("docs", exist_ok=True)
     
     # Format weather data for display
     weather_table_rows = ""
-    for loc, date, temp, prec, wind, humidity, cloud in weather_data:
+    for loc, date, temp_max, temp_min, prec, wind, humidity in weather_data:
         weather_table_rows += f"""
         <tr>
             <td><strong>{loc}</strong></td>
-            <td>{temp}°C</td>
+            <td>{temp_max}°C</td>
+            <td>{temp_min}°C</td>
             <td>{prec}mm</td>
             <td>{wind}km/h</td>
             <td>{humidity}%</td>
-            <td>{cloud}%</td>
         </tr>
         """
     
-    # Current timestamp
     updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     html_content = f"""<!DOCTYPE html>
@@ -246,10 +245,10 @@ def write_html(poem, weather_data):
                     <tr>
                         <th>Location</th>
                         <th>Max Temp (°C)</th>
+                        <th>Min Temp (°C)</th>
                         <th>Precipitation (mm)</th>
                         <th>Wind Speed (km/h)</th>
                         <th>Humidity (%)</th>
-                        <th>Cloud Cover (%)</th>
                     </tr>
                 </thead>
                 <tbody>
