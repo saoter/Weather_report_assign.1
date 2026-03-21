@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Analytics Dashboard</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        .stats {
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Weather Analytics Dashboard</h1>
+    
+    <div class="dashboard">
+        <div class="card">
+            <h2>Temperature Statistics</h2>
+            <table>
+                <tr><th>Location</th><th>Avg (°C)</th><th>Max (°C)</th><th>Min (°C)</th></tr>
+                <tr><td>Aalborg</td><td>12.2</td><td>12.3</td><td>12.2</td></tr><tr><td>Inaruwa</td><td>21.9</td><td>21.9</td><td>21.9</td></tr><tr><td>Kathmandu</td><td>20.8</td><td>20.8</td><td>20.8</td></tr>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>Precipitation Summary</h2>
+            <table>
+                <tr><th>Location</th><th>Total (mm)</th></tr>
+                <tr><td>Aalborg</td><td>0.0</td></tr><tr><td>Inaruwa</td><td>0.0</td></tr><tr><td>Kathmandu</td><td>2.5</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 20px;">
+        <h2>Database Stats</h2>
+        <p class="stats">Total Records: 15</p>
+        <p class="stats">Last Updated: 2026-03-21 12:30:37</p>
+    </div>
+</body>
+</html>
