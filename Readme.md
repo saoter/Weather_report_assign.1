@@ -1,4 +1,7 @@
+# this repo is awesome
 # 🌤️ Automated Weather Poem Pipeline
+
+
 
 An end-to-end MLOps project that combines APIs, databases, LLMs, and automation to create a daily weather poetry pipeline.
 
